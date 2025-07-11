@@ -1,12 +1,20 @@
 import { Mastra } from "@mastra/core/mastra";
+import { PineconeVector } from "@mastra/pinecone";
 import { PinoLogger } from "@mastra/loggers";
-import { weatherAgent } from "./agents/weather-agent/weather-agent"; // This can be deleted later
-import { weatherWorkflow } from "./agents/weather-agent/weather-workflow"; // This can be deleted later
-import { yourAgent } from "./agents/your-agent/your-agent"; // Build your agent here
+import { nosanaAgent } from "./agents/nosana-agent/nosana-agent";
+
+const apiKey = process.env.PINECONE_API_KEY;
+if (!apiKey) {
+	throw new Error("Pinecone API key is not set in environment variables.");
+}
+
+const pineconeVector = new PineconeVector({
+	apiKey,
+});
 
 export const mastra = new Mastra({
-	workflows: { weatherWorkflow }, // can be deleted later
-	agents: { weatherAgent, yourAgent },
+	agents: { nosanaAgent },
+	vectors: { pineconeVector: pineconeVector as any },
 	logger: new PinoLogger({
 		name: "Mastra",
 		level: "info",
