@@ -30,6 +30,6 @@ async function searchPinecone(text: string, topK: number = 1): Promise<string[]>
 
 export const pineconeQueryTool = createVectorQueryTool({
     vectorStoreName: "pineconeVector",
-    indexName: "nosana",
+    indexName: "nosana-mastra-2",
     model: embeddingModel,
 })
